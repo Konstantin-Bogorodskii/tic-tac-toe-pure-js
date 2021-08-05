@@ -1,26 +1,37 @@
 // Variables
-const status = document.querySelector('.status');
+const status = document.querySelector('.status-player');
 const reset = document.querySelector('.reset');
 const display = document.querySelector('.game-grid');
-const cells = document.querySelectorAll('.grid-cell');
+const cells = document.getElementsByClassName('grid-cell');
 
 // Game Settings
 let gameIsAlive = true;
-let isNextX = true;
+let xIsNext = true;
+const array = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [6, 4, 2],
+];
 
-// Functions
+function checkResult() {}
 
-const resetGame = e => {
-  console.log(e);
-};
-
-const cellClick = e => {
-  const target = e.target;
-  const position = target.getAttribute('data-position');
-};
-
-// Add Event Listeners
-reset.addEventListener('click', resetGame);
-cells.forEach(element => {
-  element.addEventListener('click', cellClick);
+display.addEventListener('click', e => {
+  const target = e.target.classList;
+  if (target.contains('grid-cell')) {
+    if (target.contains('x') || target.contains('circle')) return;
+    if (xIsNext) {
+      target.add('x');
+      xIsNext = !xIsNext;
+      checkResult();
+    } else {
+      target.add('circle');
+      xIsNext = !xIsNext;
+      checkResult();
+    }
+  }
 });
