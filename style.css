@@ -36,6 +36,11 @@ body {
   color: #e31b6d;
 }
 
+.status-player {
+  font-size: 30px;
+  font-weight: 500;
+}
+
 .status-action {
   display: flex;
   align-items: center;
