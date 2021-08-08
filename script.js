@@ -44,34 +44,35 @@ function checkResult() {
       winner = 'O';
       showWinner(winner);
     } else if (gameCounter === 9) {
-      winner = 'spare';
+      winner = 'It was a Draw';
       showWinner(winner);
     }
   }
 }
 
 const showWinner = winner => {
-  status.innerHTML = `<div class="status"><span class="fancy status-player">${winner}</span> has won</div>`;
-  clearBoard();
-  status.innerHTML = `<div class="status"><span class="fancy status-player">X</span> is next</div>`;
-  gameCounter = 0;
+  if (winner === 'It was a Draw') {
+    status.innerHTML = `<span class="fancy status-player">${winner}!</span>`;
+  } else {
+    status.innerHTML = `<span class="fancy status-player">${winner}</span>  has Won!`;
+  }
 };
 
 display.addEventListener('click', e => {
   const target = e.target.classList;
-  if (target.contains('grid-cell')) {
+  if (target.contains('grid-cell') && winner === null) {
     if (target.contains('x') || target.contains('circle')) return;
     if (xIsNext) {
       target.add('x');
       xIsNext = !xIsNext;
       gameCounter++;
-      statusPlayer.textContent = 'O';
+      status.innerHTML = `<span class="fancy status-player">O</span> is Next`;
       checkResult();
     } else {
       target.add('circle');
       xIsNext = !xIsNext;
       gameCounter++;
-      statusPlayer.textContent = 'X';
+      status.innerHTML = `<span class="fancy status-player">X</span> is Next`;
       checkResult();
     }
   }
@@ -82,6 +83,10 @@ function clearBoard() {
     element.classList.remove('x');
     element.classList.remove('circle');
   });
+  xIsNext = true;
+  winner = null;
+  gameCounter = 0;
+  status.innerHTML = `<span class="fancy status-player">X</span> is Next`;
 }
 
 reset.addEventListener('click', clearBoard);
